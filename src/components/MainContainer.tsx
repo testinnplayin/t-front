@@ -1,19 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import Display from './Display';
-import Form from './Form';
+import Display from "./Display";
+import Form from "./Form";
+
+import { shortenURL, transformURLForBack } from "../helpers/url-converter";
+
+import { URLCorrespondance } from "../interfaces/url-correspondance";
+
+import { BASE_ROUTE } from "../constants/base-route";
 
 type MainContainerState = {
     originalURL: string;
-    shortURL: string
+    shortURL: string;
+    apiRoute: string;
 }
+
+const URL_ENDPOINT = `${BASE_ROUTE}/urls`;
 
 export default class MainContainer extends React.Component {
     state: MainContainerState;
 
     constructor(props: any) {
         super(props);
-        this.state = { originalURL: '', shortURL: '' };
+        this.state = { originalURL: '', shortURL: '', apiRoute: `${BASE_ROUTE}/${URL_ENDPOINT}` };
 
         this.handleChange = this.handleChange.bind(this);
         this.shortenURL = this.shortenURL.bind(this);
@@ -23,11 +32,15 @@ export default class MainContainer extends React.Component {
         this.setState({ originalURL: originalURL });
     }
 
-    shortenURL() {
+    async shortenURL() {
+        this.setState({ apiRoute: URL_ENDPOINT });
         const originalURL = this.state.originalURL;
-        const bitsOfURL = originalURL.split('/');
+        const data = await shortenURL(originalURL);
+        const urlCorrespondance: URLCorrespondance = data.urlCorrespondance;
+
         this.setState({
-            shortURL: bitsOfURL[bitsOfURL.length - 1]
+            shortURL: urlCorrespondance.shortenedURL,
+            apiRoute: `${this.state.apiRoute}/${transformURLForBack(urlCorrespondance.shortenedURL)}`
         });
     }
 
@@ -39,7 +52,10 @@ export default class MainContainer extends React.Component {
                 <Form originalURL={this.state.originalURL}
                 handleBtnClick={this.shortenURL}
                 handleInputChange={this.handleChange} />
-                <Display originalURL={this.state.originalURL} shortURL={this.state.shortURL} />
+                <Display
+                    apiRoute={this.state.apiRoute}
+                    originalURL={this.state.originalURL}
+                    shortURL={this.state.shortURL} />
             </div>
         );
     }
