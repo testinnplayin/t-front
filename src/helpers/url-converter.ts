@@ -1,4 +1,4 @@
-import { postResource } from "../ajax/put-calls";
+import { postResource } from "../ajax/post-calls";
 
 import { URLCorrespondance } from "../interfaces/url-correspondance";
 
