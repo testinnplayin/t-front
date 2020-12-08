@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FormEvent } from "react";
 
 type MainContainerProps = {
     originalURL: string;
@@ -22,19 +22,20 @@ export default class Form extends React.Component<MainContainerProps,FormProps> 
         this.props.handleInputChange(event.target.value);
     }
 
-    handleSubmit() {
+    handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
         this.props.handleBtnClick();
     }
 
     render() {
         let originalURL = this.props.originalURL;
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <label>
                     Long URL
                 </label>
                 <input value={originalURL} onChange={this.handleChange} type="text"/>
-                <button type="submit" onClick={this.handleSubmit}>Submit</button>
+                <button type="submit" >Submit</button>
             </form>
         );
     }

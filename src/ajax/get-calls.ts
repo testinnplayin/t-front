@@ -1,7 +1,9 @@
 const reqOptions = {
-    mode: "GET"
+  method: "GET",
 };
 
-export const getURLCorrespondances = async (url: string) => {
-    
+export const getResources = async (url: string) => {
+  const getRequest = new Request(url, reqOptions);
+
+  return await (await fetch(getRequest)).json();
 };
