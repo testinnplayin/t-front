@@ -8,21 +8,21 @@ type MainContainerProps = {
 
 type FormProps = {
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    handleClick: () => void;
+    handleSubmit: () => void;
 }
 
 export default class Form extends React.Component<MainContainerProps,FormProps> {
     constructor(props: MainContainerProps) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event: ChangeEvent<HTMLInputElement>) {
         this.props.handleInputChange(event.target.value);
     }
 
-    handleClick() {
+    handleSubmit() {
         this.props.handleBtnClick();
     }
 
@@ -34,7 +34,7 @@ export default class Form extends React.Component<MainContainerProps,FormProps> 
                     Long URL
                 </label>
                 <input value={originalURL} onChange={this.handleChange} type="text"/>
-                <button type="button" onClick={this.handleClick}>Submit</button>
+                <button type="submit" onClick={this.handleSubmit}>Submit</button>
             </form>
         );
     }
