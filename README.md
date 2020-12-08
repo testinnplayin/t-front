@@ -2,7 +2,7 @@
 
 This project works with [https://github.com/testinnplayin/t-back](https://github.com/testinnplayin/t-back)
 
-Please be sure to install both in order to use the URL shortener.
+Please be sure to install both in order to use the URL shortener. Use `npm install` or `yarn` after downloading the project.
 
 # Resources
 
